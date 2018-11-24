@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import GlobalStyle from './GlobalStyle'
 import Stack from './Stack';
 import Card from './Card';
-import stuntDoubles from './stuntDoubles'
+import stuntDoubles from './utils/stuntDoubles'
+import Check from './assets/Check';
+import Cross from './assets/Cross'
+import fullyFlared from './assets/fullyFlared.png';
 
 const MainWrapper = styled.div`
   align-items: center;
@@ -67,11 +70,6 @@ const Button = styled.button`
   :disabled {
     border: ${props => props.isTick ? `0.063rem solid #a8eec1` : `0.063rem solid #f5aaaa`};
   }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-  }
 `
 
 class App extends Component {
@@ -109,7 +107,7 @@ class App extends Component {
       <Fragment>
         <GlobalStyle />
         <MainWrapper>
-          <Title><img src="" alt="" /></Title>
+          <Title><img src={fullyFlared} alt="Movie title" /></Title>
           <h1>Stunt Doubles</h1>
           <InnerWrapper>
             <Stack>
@@ -125,8 +123,12 @@ class App extends Component {
               ))}
             </Stack>
             <ButtonWrapper>
-              <Button disabled={stuntDoubles.length <= 0} onClick={this.animateCardDiscarded}></Button>
-              <Button disabled={stuntDoubles.length <= 0} isTick onClick={this.animateCardChosen}></Button>
+              <Button disabled={stuntDoubles.length <= 0} onClick={this.animateCardDiscarded}>
+                <Cross stroke={stuntDoubles.length > 0 ? '#dc3030' : '#f5aaaa'} />
+              </Button>
+              <Button disabled={stuntDoubles.length <= 0} isTick onClick={this.animateCardChosen}>
+                <Check stroke={stuntDoubles.length > 0 ? '#38c172' : '#a8eec1'} />
+              </Button>
             </ButtonWrapper>
           </InnerWrapper>
         </MainWrapper>
