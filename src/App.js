@@ -15,30 +15,30 @@ const MainWrapper = styled.div`
   justify-content: center;
 
   h1 {
-    margin 0.5em auto;
+    margin 0.5rem auto;
   }
 `
 const InnerWrapper = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 100px);
-  padding: 0.5em 2rem;
+  height: calc(100vh - 6.25rem);
+  padding: 0.5rem 2rem;
   touch-action: none;
-  width: 320px;
+  width: 20em;
 `
 
 const Title = styled.div`
   background: #191d1c;
   display: flex;
-  height: 100px;
+  height: 6.25rem;
   justify-content: center;
   margin: 5% 0 0 0;
   width: 100vw;
 
   img {
     height: auto;
-    max-width: 320px;
+    max-width: 20rem;
   }
 `
 
@@ -48,20 +48,22 @@ const ButtonWrapper = styled.div`
   justify-content: space-between;
   margin: 0 auto;
   padding: 0;
-  perspective: 320px;
+  perspective: 20rem;
   perspective-origin: 50% 100%;
-  width: 236px;
+  width: 14.75em;
 `
 
 const Button = styled.button`
   align-items: center;
   background: transparent;
-  border: ${props => props.isTick ? `1px solid #38c172` : `1px solid #dc3030`};
+  border: ${props => props.isTick ? `0.063rem solid #38c172` : `0.063rem solid #dc3030`};
   border-radius: 50%;
   display: flex;
-  height: 5em;
+  height: 4rem;
   justify-content: center;
-  width: 5em;img {
+  width: 4rem;
+  
+  img {
     max-width: 100%;
     height: auto;
   }
