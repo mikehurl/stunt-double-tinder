@@ -93,13 +93,13 @@ class Card extends Component {
     if (element !== this._activeItem) {
       return
     }
-
     if (this._activeItem !== null) {
       this._activeItem.initialX = this._activeItem.currentX;
     }
-
     this._active = false;
     this._activeItem = null;
+
+    this.props.removeCard()
   }
 
   setTranslate(xPos, element) {
@@ -115,7 +115,7 @@ class Card extends Component {
   }
 
   render() {
-    const { isFirst, isSecond, stuntDouble } = this.props;
+    const { className, isFirst, isSecond, stuntDouble } = this.props;
 
     const firstCardStyle = {
       opacity: 1,
@@ -139,6 +139,7 @@ class Card extends Component {
 
     return (
       <Wrapper
+        className={className}
         onTouchStart={this.beginDrag}
         onTouchMove={this.drag}
         style={isFirst ? firstCardStyle : isSecond ? secondCardStyle : allOtherCardsStyle}

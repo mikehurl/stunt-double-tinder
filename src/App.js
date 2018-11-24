@@ -72,7 +72,15 @@ const Button = styled.button`
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { stuntDoubles: stuntDoubles }
+    this.state = { stuntDoubles: stuntDoubles };
+    this.removeCard = this.removeCard.bind(this)
+  }
+
+  removeCard() {
+    const remaminingStuntDoubles = this.state.stuntDoubles.filter(stuntDouble =>
+      stuntDouble.id.name !== this.state.stuntDoubles[0].id.name
+    )
+    this.setState({ stuntDoubles: remaminingStuntDoubles })
   }
 
   render() {
@@ -91,6 +99,7 @@ class App extends Component {
                   isFirst={index === 0}
                   isSecond={index === 1}
                   key={stuntDouble.id.value}
+                  removeCard={this.removeCard}
                   stuntDouble={stuntDouble}
                 />
               ))}
