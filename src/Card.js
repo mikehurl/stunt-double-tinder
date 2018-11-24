@@ -11,20 +11,40 @@ const Wrapper = styled.li`
   position: absolute;
   transform-origin: 50% 100%;
   width: 15rem;
-`
 
-const Info = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
   padding: 1rem;
-  width: 100%
+
+  @keyframes discardWhenYes {
+    from {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+    
+    to {
+      transform: rotate(40deg) translateY(-80px);
+      opacity: 0;
+      }
+    }
+
+  @keyframes discardWhenNo {
+    from {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+
+    to {
+      transform: rotate(-40deg) translateY(-80px);
+      opacity: 0;
+    }
+  }
 `
 
 const Name = styled.div`
   font-size: 1.25em;
   text-align: center;
-  width: 100%
+  width: 100%;
 `
 
 const Picture = styled.img`
@@ -35,6 +55,65 @@ const Picture = styled.img`
 `
 
 class Card extends Component {
+  constructor(props) {
+    super(props)
+    this._active = false;
+    this._activeItem = null;
+
+    this.beginDrag = this.beginDrag.bind(this)
+    this.drag = this.drag.bind(this)
+    this.endDrag = this.endDrag.bind(this)
+    this.setTranslate = this.setTranslate.bind(this)
+  }
+
+  beginDrag(event) {
+    this._active = true;
+    this._activeItem = event.target.tagName === 'LI' ? event.target : event.target.parentNode;
+
+    if (this._activeItem !== null) {
+      if (!this._activeItem.xOffset) {
+        this._activeItem.xOffset = 0;
+      }
+
+      this._activeItem.initialX = event.touches[0].clientX - this._activeItem.xOffset;
+    }
+  }
+
+  drag(event) {
+    event.preventDefault();
+
+    if (this._active) {
+      this._activeItem.currentX = event.touches[0].clientX - this._activeItem.initialX;
+      this._activeItem.xOffset = this._activeItem.currentX;
+      this.setTranslate(this._activeItem.currentX, this._activeItem);
+    }
+  }
+
+  endDrag(element) {
+    if (element !== this._activeItem) {
+      return
+    }
+
+    if (this._activeItem !== null) {
+      this._activeItem.initialX = this._activeItem.currentX;
+    }
+
+    this._active = false;
+    this._activeItem = null;
+  }
+
+  setTranslate(xPos, element) {
+    if (xPos > 0) {
+      element.style.animation = "discardWhenYes 1.5s ease-out"
+      setTimeout(() => this.endDrag(element), 1500)
+    }
+
+    if (xPos < 0) {
+      element.style.animation = "discardWhenNo 1.5s ease-out"
+      setTimeout(() => this.endDrag(element), 1500)
+    }
+  }
+
   render() {
     const { isFirst, isSecond, stuntDouble } = this.props;
 
@@ -60,12 +139,12 @@ class Card extends Component {
 
     return (
       <Wrapper
+        onTouchStart={this.beginDrag}
+        onTouchMove={this.drag}
         style={isFirst ? firstCardStyle : isSecond ? secondCardStyle : allOtherCardsStyle}
       >
-        <Info>
-          <Picture src={stuntDouble.picture.large} alt="Picture of stunt double" />
-          <Name>{`${stuntDouble.name.first} ${stuntDouble.name.last}`}</Name>
-        </Info>
+        <Picture src={stuntDouble.picture.large} alt="Picture of stunt double" />
+        <Name>{`${stuntDouble.name.first} ${stuntDouble.name.last}`}</Name>
       </Wrapper>
     )
   }
