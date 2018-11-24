@@ -67,6 +67,7 @@ class Card extends Component {
   }
 
   beginDrag(event) {
+    console.log(event.type)
     this._active = true;
     this._activeItem = event.target.tagName === 'LI' ? event.target : event.target.parentNode;
 
@@ -75,7 +76,11 @@ class Card extends Component {
         this._activeItem.xOffset = 0;
       }
 
-      this._activeItem.initialX = event.touches[0].clientX - this._activeItem.xOffset;
+      if (event.type === 'touchstart') {
+        this._activeItem.initialX = event.touches[0].clientX - this._activeItem.xOffset;
+      } else {
+        this._activeItem.initialX = event.clientX - this._activeItem.xOffset;
+      }
     }
   }
 
@@ -83,7 +88,12 @@ class Card extends Component {
     event.preventDefault();
 
     if (this._active) {
-      this._activeItem.currentX = event.touches[0].clientX - this._activeItem.initialX;
+      if (event.type === 'touchmove') {
+        this._activeItem.currentX = event.touches[0].clientX - this._activeItem.initialX;
+      } else {
+        this._activeItem.currentX = event.clientX - this._activeItem.initialX;
+      }
+
       this._activeItem.xOffset = this._activeItem.currentX;
       this.setTranslate(this._activeItem.currentX, this._activeItem);
     }
@@ -140,6 +150,9 @@ class Card extends Component {
     return (
       <Wrapper
         className={className}
+        onMouseDown={this.beginDrag}
+        onMouseMove={this.drag}
+        onMouseUp={() => this.endDrag(stuntDouble)}
         onTouchStart={this.beginDrag}
         onTouchMove={this.drag}
         style={isFirst ? firstCardStyle : isSecond ? secondCardStyle : allOtherCardsStyle}
