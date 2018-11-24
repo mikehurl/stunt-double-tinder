@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import GlobalStyle from './GlobalStyle'
 import Stack from './Stack';
+import Card from './Card';
 
 const MainWrapper = styled.div`
   align-items: center;
@@ -74,7 +75,11 @@ class App extends Component {
           <Title><img src="" alt="" /></Title>
           <h1>Stunt Doubles</h1>
           <InnerWrapper>
-            <Stack></Stack>
+            <Stack>
+              <Card isFirst></Card>
+              <Card isSecond></Card>
+              <Card></Card>
+            </Stack>
             <ButtonWrapper>
               <Button></Button>
               <Button isTick></Button>
