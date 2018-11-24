@@ -18,7 +18,7 @@ const MainWrapper = styled.div`
   justify-content: center;
 
   h1 {
-    margin 0.5rem auto;
+    margin 0.75rem auto;
   }
 `
 const InnerWrapper = styled.div`
@@ -65,10 +65,15 @@ const Button = styled.button`
   display: flex;
   height: 4rem;
   justify-content: center;
+  transition: transform cubic-bezier(0.47, 2.02, 0.31, -0.36) 0.35s;
   width: 4rem;
 
   :disabled {
     border: ${props => props.isTick ? `0.063rem solid #a8eec1` : `0.063rem solid #f5aaaa`};
+  }
+
+  :hover:not(:disabled) {
+    transform: scale(1.1);
   }
 `
 

@@ -5,16 +5,16 @@ const Wrapper = styled.li`
   background: #fff;
   border: 0.063rem solid #000;
   border-radius: 0.375rem;
+  display: flex;
+  flex-direction: column;
   height: 20rem;
   opacity: 0;
   overflow: hidden;
+  padding: 1rem;
   position: absolute;
   transform-origin: 50% 100%;
+  transition: transform cubic-bezier(0.47, 2.02, 0.31, -0.36) 0.35s;
   width: 15rem;
-
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
 
   @keyframes discardWhenYes {
     from {
