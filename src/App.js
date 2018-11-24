@@ -58,10 +58,15 @@ const Button = styled.button`
   background: transparent;
   border: ${props => props.isTick ? `0.063rem solid #38c172` : `0.063rem solid #dc3030`};
   border-radius: 50%;
+  cursor: pointer;
   display: flex;
   height: 4rem;
   justify-content: center;
   width: 4rem;
+
+  :disabled {
+    border: ${props => props.isTick ? `0.063rem solid #a8eec1` : `0.063rem solid #f5aaaa`};
+  }
   
   img {
     max-width: 100%;
@@ -73,7 +78,21 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = { stuntDoubles: stuntDoubles };
+    this.animateCardChosen = this.animateCardChosen.bind(this)
+    this.animateCardDiscarded = this.animateCardDiscarded.bind(this)
     this.removeCard = this.removeCard.bind(this)
+  }
+
+  animateCardChosen() {
+    const target = document.querySelector(`.${this.state.stuntDoubles[0].id.name}`)
+    target.style.animation = "discardWhenYes 1.5s ease-out";
+    setTimeout(() => this.removeCard(), 1500)
+  }
+
+  animateCardDiscarded() {
+    const target = document.querySelector(`.${this.state.stuntDoubles[0].id.name}`)
+    target.style.animation = "discardWhenNo 1.5s ease-out";
+    setTimeout(() => this.removeCard(), 600)
   }
 
   removeCard() {
@@ -96,6 +115,7 @@ class App extends Component {
             <Stack>
               {stuntDoubles.length > 0 && stuntDoubles.map((stuntDouble, index) => (
                 <Card
+                  className={stuntDouble.id.name}
                   isFirst={index === 0}
                   isSecond={index === 1}
                   key={stuntDouble.id.value}
@@ -105,8 +125,8 @@ class App extends Component {
               ))}
             </Stack>
             <ButtonWrapper>
-              <Button></Button>
-              <Button isTick></Button>
+              <Button disabled={stuntDoubles.length <= 0} onClick={this.animateCardDiscarded}></Button>
+              <Button disabled={stuntDoubles.length <= 0} isTick onClick={this.animateCardChosen}></Button>
             </ButtonWrapper>
           </InnerWrapper>
         </MainWrapper>
