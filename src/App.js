@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import styled from 'styled-components';
 
 import GlobalStyle from './GlobalStyle'
+import Stack from './Stack';
 
 const MainWrapper = styled.div`
   align-items: center;
@@ -73,6 +74,7 @@ class App extends Component {
           <Title><img src="" alt="" /></Title>
           <h1>Stunt Doubles</h1>
           <InnerWrapper>
+            <Stack></Stack>
             <ButtonWrapper>
               <Button></Button>
               <Button isTick></Button>
