@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import GlobalStyle from './GlobalStyle'
 import Stack from './Stack';
 import Card from './Card';
+import stuntDoubles from './stuntDoubles'
 
 const MainWrapper = styled.div`
   align-items: center;
@@ -67,7 +68,14 @@ const Button = styled.button`
 `
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { stuntDoubles: stuntDoubles }
+  }
+
   render() {
+    const { stuntDoubles } = this.state;
+
     return (
       <Fragment>
         <GlobalStyle />
@@ -76,9 +84,14 @@ class App extends Component {
           <h1>Stunt Doubles</h1>
           <InnerWrapper>
             <Stack>
-              <Card isFirst></Card>
-              <Card isSecond></Card>
-              <Card></Card>
+              {stuntDoubles.length > 0 && stuntDoubles.map((stuntDouble, index) => (
+                <Card
+                  isFirst={index === 0}
+                  isSecond={index === 1}
+                  key={stuntDouble.id.value}
+                  stuntDouble={stuntDouble}
+                />
+              ))}
             </Stack>
             <ButtonWrapper>
               <Button></Button>

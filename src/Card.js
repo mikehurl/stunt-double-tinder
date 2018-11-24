@@ -3,20 +3,27 @@ import styled from 'styled-components';
 
 const Wrapper = styled.li`
   background: #fff;
-  width: 240px;
-  height: 320px;
   border: 1px solid #000;
   border-radius: 4px;
-  text-align: center;
-  overflow: hidden;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
+  height: 320px;
   opacity: 0;
+  overflow: hidden;
+  padding: 0.5em 1em;
+  position: absolute;
+  text-align: center;
   transform-origin: 50% 100%;
+  width: 240px;
+`
+
+const Name = styled.div`
+  width: 100%
 `
 
 class Card extends Component {
   render() {
-    const { isFirst, isSecond } = this.props;
+    const { isFirst, isSecond, stuntDouble } = this.props;
 
     const firstCardStyle = {
       opacity: 1,
@@ -40,7 +47,9 @@ class Card extends Component {
     return (
       <Wrapper
         style={isFirst ? firstCardStyle : isSecond ? secondCardStyle : allOtherCardsStyle}
-      />
+      >
+        <Name>{`${stuntDouble.name.first} ${stuntDouble.name.last}`}</Name>
+      </Wrapper>
     )
   }
 }
